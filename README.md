@@ -67,7 +67,7 @@ MAVROS provides telemetry and control integration with drones or ground vehicles
 ## Repository Structure
 
 ```
-3d-slam/
+RealSense-RTAB-SLAM/
 │
 ├── librealsense/        Intel RealSense SDK
 ├── realsense-ros/      ROS 2 drivers for RealSense cameras
@@ -98,7 +98,7 @@ Generated build files (`build/`, `install/`, `log/`) are excluded.
 ```
 mkdir -p slam_ws/src
 cd slam_ws/src
-git clone https://github.com/karthikeyan-manimaran/3d-slam.git .
+git clone https://github.com/karthikeyan-manimaran/RealSense-RTAB-SLAM.git .
 ```
 
 ### 2. Install dependencies
@@ -214,4 +214,5 @@ Each package retains its original open-source license.
 Refer to individual package directories for specific license terms.
 
 ---
+
 
