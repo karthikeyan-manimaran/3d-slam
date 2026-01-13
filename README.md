@@ -192,7 +192,7 @@ These outputs can be used for autonomous navigation, obstacle avoidance, and exp
 
 Click to watch the real-time 3D SLAM system running:
 
-[![Demo Video](media/preview.webm)]
+[![Demo Video](media/preview.mp4)]
 
 ---
 
@@ -222,6 +222,7 @@ Each package retains its original open-source license.
 Refer to individual package directories for specific license terms.
 
 ---
+
 
 
 
