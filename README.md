@@ -1,28 +1,29 @@
-3D-SLAM Using Intel RealSense, RTAB-Map and ROS 2
-Overview
+# 3D-SLAM Using Intel RealSense, RTAB-Map and ROS 2
 
-This repository contains a complete ROS 2-based 3D SLAM workspace built around Intel RealSense RGB-D cameras, RTAB-Map, and MAVROS.
-The system is designed to enable real-time localization and dense 3D mapping for mobile robots and aerial vehicles operating in unknown or GPS-denied environments.
+## Overview
+
+This repository contains a complete **ROS 2-based 3D SLAM workspace** built around **Intel RealSense RGB-D cameras**, **RTAB-Map**, and **MAVROS**.
+The system is designed to enable **real-time localization and dense 3D mapping** for mobile robots and aerial vehicles operating in **unknown or GPS-denied environments**.
 
 The workspace integrates depth sensing, visual odometry, inertial data, and MAVLink telemetry to estimate the robot’s pose while constructing a globally consistent 3D representation of the environment. This enables autonomous navigation, mapping, and environment understanding for robotics and inspection platforms.
 
-Core Capabilities
+---
 
-Real-time RGB-D SLAM
+## Core Capabilities
 
-Visual-inertial odometry
+* Real-time RGB-D SLAM
+* Visual-inertial odometry
+* Loop-closure and global map optimization
+* Dense 3D point-cloud generation
+* Occupancy grid and depth map creation
+* MAVLink-based vehicle integration (PX4 / ArduPilot)
+* ROS 2 compatible modular architecture
 
-Loop-closure and global map optimization
+---
 
-Dense 3D point-cloud generation
+## System Architecture
 
-Occupancy grid and depth map creation
-
-MAVLink-based vehicle integration (PX4 / ArduPilot)
-
-ROS 2 compatible modular architecture
-
-System Architecture
+```
 Intel RealSense Camera
         |
         v
@@ -40,23 +41,32 @@ RTAB-Map (Visual Odometry + Graph-SLAM)
         |
         v
 MAVROS / Robot Controller
-
+```
 
 The RealSense camera provides synchronized RGB, depth, and IMU data.
 RTAB-Map performs visual odometry and graph-based SLAM.
 MAVROS provides telemetry and control integration with drones or ground vehicles.
 
-Technology Stack
-Component	Purpose
-ROS 2	Robot middleware and communication
-RTAB-Map	Graph-based visual SLAM
-Intel RealSense	RGB-D and IMU sensing
-librealsense	Low-level RealSense drivers
-realsense-ros	ROS 2 RealSense interface
-MAVROS	MAVLink interface for UAVs/UGVs
-OpenCV	Image and feature processing
-vision_opencv	ROS-OpenCV bridge
-Repository Structure
+---
+
+## Technology Stack
+
+| Component       | Purpose                            |
+| --------------- | ---------------------------------- |
+| ROS 2           | Robot middleware and communication |
+| RTAB-Map        | Graph-based visual SLAM            |
+| Intel RealSense | RGB-D and IMU sensing              |
+| librealsense    | Low-level RealSense drivers        |
+| realsense-ros   | ROS 2 RealSense interface          |
+| MAVROS          | MAVLink interface for UAVs/UGVs    |
+| OpenCV          | Image and feature processing       |
+| vision_opencv   | ROS-OpenCV bridge                  |
+
+---
+
+## Repository Structure
+
+```
 3d-slam/
 │
 ├── librealsense/        Intel RealSense SDK
@@ -66,119 +76,142 @@ Repository Structure
 ├── mavros/             MAVLink ROS 2 interface
 ├── vision_opencv/      OpenCV integration for ROS 2
 └── README.md
+```
 
+This repository intentionally contains **only source code**.
+Generated build files (`build/`, `install/`, `log/`) are excluded.
 
-This repository intentionally contains only source code.
-Generated build files (build/, install/, log/) are excluded.
+---
 
-Supported Hardware
+## Supported Hardware
 
-Intel RealSense depth cameras (D435, D455, D415, L515, etc.)
+* Intel RealSense depth cameras (D435, D455, D415, L515, etc.)
+* Mobile robots and UAVs running PX4 or ArduPilot
+* Systems with Linux or ROS 2-supported environments
 
-Mobile robots and UAVs running PX4 or ArduPilot
+---
 
-Systems with Linux or ROS 2-supported environments
+## Installation
 
-Installation
-1. Create a ROS 2 workspace
+### 1. Create a ROS 2 workspace
+
+```
 mkdir -p slam_ws/src
 cd slam_ws/src
 git clone https://github.com/karthikeyan-manimaran/3d-slam.git .
+```
 
-2. Install dependencies
+### 2. Install dependencies
 
 Install RealSense drivers:
 
+```
 sudo apt install ros-<ros2-distro>-realsense2-camera
 sudo apt install ros-<ros2-distro>-rtabmap-ros
 sudo apt install ros-<ros2-distro>-mavros
-
+```
 
 Install MAVROS dependencies:
 
+```
 sudo apt install geographiclib-tools
 sudo geographiclib-get-geoids egm96-5
+```
 
+Replace `<ros2-distro>` with your ROS 2 distribution (foxy, humble, iron, etc.).
 
-Replace <ros2-distro> with your ROS 2 distribution (foxy, humble, iron, etc.).
+---
 
-3. Build the workspace
+### 3. Build the workspace
+
+```
 cd ~/slam_ws
 colcon build
 source install/setup.bash
+```
 
-Running the System
-Start RealSense camera
+---
+
+## Running the System
+
+### Start RealSense camera
+
+```
 ros2 launch realsense2_camera rs_launch.py
+```
 
-Start RTAB-Map SLAM
+### Start RTAB-Map SLAM
+
+```
 ros2 launch rtabmap_ros rtabmap.launch.py
+```
 
-Start MAVROS (if using UAV or rover)
+### Start MAVROS (if using UAV or rover)
+
+```
 ros2 launch mavros mavros.launch.py
+```
 
-Visualization
+---
+
+## Visualization
 
 Use RViz2 to view:
 
-3D point clouds
+* 3D point clouds
+* Robot pose (TF)
+* Map and occupancy grid
 
-Robot pose (TF)
-
-Map and occupancy grid
-
+```
 rviz2
-
+```
 
 Add:
 
-/rtabmap/cloud_map
+* `/rtabmap/cloud_map`
+* `/rtabmap/grid_map`
+* TF frames
 
-/rtabmap/grid_map
+---
 
-TF frames
-
-Outputs
+## Outputs
 
 The system produces:
 
-Dense 3D maps
-
-Loop-closed optimized maps
-
-Robot pose and trajectory
-
-Depth and RGB streams
-
-Occupancy grids for navigation
+* Dense 3D maps
+* Loop-closed optimized maps
+* Robot pose and trajectory
+* Depth and RGB streams
+* Occupancy grids for navigation
 
 These outputs can be used for autonomous navigation, obstacle avoidance, and exploration.
 
-Applications
+---
 
-Autonomous indoor robots
+## Applications
 
-Drone-based 3D inspection
+* Autonomous indoor robots
+* Drone-based 3D inspection
+* Warehouse mapping
+* Search and rescue robots
+* Infrastructure and tunnel mapping
+* Research in robotics and perception
 
-Warehouse mapping
+---
 
-Search and rescue robots
+## Development Notes
 
-Infrastructure and tunnel mapping
+* This repository is designed to be built using `colcon`
+* No precompiled binaries are stored
+* Submodules are not used; all packages are included as normal source code
+* Compatible with simulation or real hardware
 
-Research in robotics and perception
+---
 
-Development Notes
-
-This repository is designed to be built using colcon
-
-No precompiled binaries are stored
-
-Submodules are not used; all packages are included as normal source code
-
-Compatible with simulation or real hardware
-
-License
+## License
 
 Each package retains its original open-source license.
 Refer to individual package directories for specific license terms.
+
+---
+
